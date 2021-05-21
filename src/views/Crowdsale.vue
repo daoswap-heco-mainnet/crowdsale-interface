@@ -327,22 +327,22 @@ export default {
         const contract = await getContract("Crowdsale", web3);
         const weiRaised = await contract.methods.weiRaised().call();
         this.dataForCrowdsale.weiRaised = formatAmountForString(weiRaised);
-        this.dataForCrowdsale.soldNumber = await contract.methods
-          .soldNumber()
-          .call();
-        this.dataForCrowdsale.totalNumber = await contract.methods
-          .totalNumber()
-          .call();
+        const soldNumber = await contract.methods.soldNumber().call();
+        this.dataForCrowdsale.soldNumber = parseInt(soldNumber);
+        const totalNumber = await contract.methods.totalNumber().call();
+        this.dataForCrowdsale.totalNumber = parseInt(totalNumber);
         const joinedAmount = await contract.methods.joined(address).call();
         this.dataForCrowdsale.joinedAmount = formatAmountForString(
           joinedAmount
         );
-        this.dataForCrowdsale.minCrowdsaleAmount = await contract.methods
+        const minCrowdsaleAmount = await contract.methods
           .minCrowdsaleAmount()
           .call();
-        this.dataForCrowdsale.maxCrowdsaleAmount = await contract.methods
+        this.dataForCrowdsale.minCrowdsaleAmount = parseInt(minCrowdsaleAmount);
+        const maxCrowdsaleAmount = await contract.methods
           .maxCrowdsaleAmount()
           .call();
+        this.dataForCrowdsale.maxCrowdsaleAmount = parseInt(maxCrowdsaleAmount);
         this.crowdsaleAmount = this.dataForCrowdsale.minCrowdsaleAmount;
         const assetsState = {
           fetching: false
